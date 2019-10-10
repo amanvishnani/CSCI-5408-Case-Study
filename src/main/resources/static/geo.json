@@ -1,0 +1,77 @@
+[
+  {
+    "memberId": -1,
+    "parentMemberId": "",
+    "memberName": "ALL"
+  },
+  {
+    "memberId": 1,
+    "parentMemberId": "",
+    "memberName": "Canada"
+  },
+  {
+    "memberId": 2,
+    "parentMemberId": 1,
+    "memberName": "Newfoundland and Labrador"
+  },
+  {
+    "memberId": 3,
+    "parentMemberId": 1,
+    "memberName": "Prince Edward Island"
+  },
+  {
+    "memberId": 4,
+    "parentMemberId": 1,
+    "memberName": "Nova Scotia"
+  },
+  {
+    "memberId": 5,
+    "parentMemberId": 1,
+    "memberName": "New Brunswick"
+  },
+  {
+    "memberId": 6,
+    "parentMemberId": 1,
+    "memberName": "Quebec"
+  },
+  {
+    "memberId": 7,
+    "parentMemberId": 1,
+    "memberName": "Ontario"
+  },
+  {
+    "memberId": 8,
+    "parentMemberId": 1,
+    "memberName": "Manitoba"
+  },
+  {
+    "memberId": 9,
+    "parentMemberId": 1,
+    "memberName": "Saskatchewan"
+  },
+  {
+    "memberId": 10,
+    "parentMemberId": 1,
+    "memberName": "Alberta"
+  },
+  {
+    "memberId": 11,
+    "parentMemberId": 1,
+    "memberName": "British Columbia"
+  },
+  {
+    "memberId": 12,
+    "parentMemberId": 1,
+    "memberName": "Yukon"
+  },
+  {
+    "memberId": 14,
+    "parentMemberId": 1,
+    "memberName": "Northwest Territories"
+  },
+  {
+    "memberId": 15,
+    "parentMemberId": 1,
+    "memberName": "Nunavut"
+  }
+]

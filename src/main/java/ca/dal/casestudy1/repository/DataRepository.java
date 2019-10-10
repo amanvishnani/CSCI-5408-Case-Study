@@ -13,4 +13,8 @@ import org.springframework.stereotype.Repository;
 public interface DataRepository extends PagingAndSortingRepository<Data, Long> {
     @EntityGraph(value = "graph.data.*", type = EntityGraph.EntityGraphType.LOAD)
     Page<Data> findAllByGeographyEquals(Geography geography, Pageable pageable);
+
+    @Override
+    @EntityGraph(value = "graph.data.*", type = EntityGraph.EntityGraphType.LOAD)
+    Page<Data> findAll(Pageable pageable);
 }
