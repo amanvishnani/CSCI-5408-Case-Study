@@ -1,8 +1,7 @@
 agGrid.initialiseAgGridWithAngular1(angular);
 var app = angular.module("CaseStudy", ["agGrid"]);
-app.controller("AppController", ['$scope', '$http', function ($scope, $http) {
+app.controller("AppController", ['$scope', '$http', '$filter', function ($scope, $http, $filter) {
     var pageNum = 0;
-    var pageSize = 100;
 
     function getGeography() {
         $http.get('/geo.json').then(function (value) {
@@ -12,6 +11,7 @@ app.controller("AppController", ['$scope', '$http', function ($scope, $http) {
     }
 
     $scope.datasource = 'mysql';
+    $scope.pageSize = "100";
     $scope.responseTime = 0;
     $scope.geography = [];
     $scope.selectedGeo = {memberId: -1, memberName: 'ALL'};
@@ -34,10 +34,17 @@ app.controller("AppController", ['$scope', '$http', function ($scope, $http) {
         getRows: function (params) {
             var url = '/data/'+ $scope.datasource;
             var startTime = new Date();
-            $http.get(url, {params:{pageNumber: pageNum, pageSize: pageSize, geography: $scope.selectedGeo.memberName}}).then(function (value) {
+            $http.get(url, {params:{pageNumber: pageNum, pageSize: $scope.pageSize, geography: $scope.selectedGeo.memberName}}).then(function (value) {
                 var endTime = new Date();
                 $scope.responseTime = endTime - startTime;
-                params.successCallback(value.data.content);
+                for (var i = 0; i < value.data.content.length; i++) {
+                    var element = value.data.content[i];
+                    element.refDate = new Date(element.refDate);
+                    element.refDate = $filter('date')(element.refDate, 'MMMM-yyyy')
+                }
+                if(value.data.content.length > 0) {
+                    params.successCallback(value.data.content);
+                }
                 pageNum++;
             });
         }

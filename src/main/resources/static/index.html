@@ -59,7 +59,17 @@
                     </select>
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-3">
+                <div class="row">
+                    <label class="col-3" for="page-size">Page Size:</label>
+                    <select class="form-control col-9" id="page-size" ng-model="pageSize" ng-change="changeDataSource()">
+                        <option value="100">100</option>
+                        <option value="500">500</option>
+                        <option value="1000">1000</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-1">
                 <span> {{datasource}}: {{responseTime}} ms</span>
             </div>
         </div>
