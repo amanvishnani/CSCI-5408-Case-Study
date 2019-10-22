@@ -32,7 +32,7 @@
                     <input class="form-check-input"
                            type="radio"
                            ng-model="datasource"
-                           ng-change="changeDataSource()"
+                           ng-change="getRows()"
                            ng-value="'mysql'"
                            id="mysql">
                     <label class="form-check-label" for="mysql">
@@ -43,7 +43,7 @@
                     <input class="form-check-input"
                            type="radio"
                            ng-model="datasource"
-                           ng-change="changeDataSource()"
+                           ng-change="getRows()"
                            ng-value="'mongo'"
                            id="mongo">
                     <label class="form-check-label" for="mongo">
@@ -55,26 +55,17 @@
                 <div class="form-group row">
                     <label class="col-3" for="exampleFormControlSelect1">Geography:</label>
                     <select class="form-control col-9" id="exampleFormControlSelect1" ng-options="geo.memberName for geo in geography track by geo.memberId"
-                            ng-model="selectedGeo" ng-change="changeDataSource()">
+                            ng-model="selectedGeo" ng-change="getRows()">
                     </select>
                 </div>
             </div>
             <div class="col-3">
-                <div class="row">
-                    <label class="col-3" for="page-size">Page Size:</label>
-                    <select class="form-control col-9" id="page-size" ng-model="pageSize" ng-change="changeDataSource()">
-                        <option value="100">100</option>
-                        <option value="500">500</option>
-                        <option value="1000">1000</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-1">
-                <span> {{datasource}}: {{responseTime}} ms</span>
+                <span>{{datasource}} DB Fetch Time: {{fetchTime}} ms</span><br/>
+                <span> HTTP Response time: {{responseTime}} ms</span>
             </div>
         </div>
 
-        <div ag-grid="gridOptions" class="ag-theme-balham" style="height: 90%;" ng-init="changeDataSource()"></div>
+        <div ag-grid="gridOptions" class="ag-theme-balham" style="height: 90%;" ng-init="getRows()"></div>
     </div>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

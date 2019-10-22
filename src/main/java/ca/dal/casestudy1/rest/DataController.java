@@ -1,6 +1,7 @@
 package ca.dal.casestudy1.rest;
 
 import ca.dal.casestudy1.dto.DataDetail;
+import ca.dal.casestudy1.dto.DataSummary;
 import ca.dal.casestudy1.model.Data;
 import ca.dal.casestudy1.model.Geography;
 import ca.dal.casestudy1.model.MongoData;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("data")
@@ -28,7 +32,7 @@ public class DataController {
     private MysqlGeographyRepository mysqlGeographyRepository;
 
     @GetMapping("mysql")
-    public Page<DataDetail> getMysqlData(
+    public DataSummary<DataDetail> getMysqlData(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "ALL") String geography
@@ -38,26 +42,32 @@ public class DataController {
         if(!geography.equals("ALL")) {
             geo = mysqlGeographyRepository.findFirstByMemberName(geography);
         }
-        Page<Data> page;
+        Date d1 = new Date();
+        List<Data> list;
         if(geo==null) {
-            page = dataRepository.findAll(request);
+            list = dataRepository.findAll();
         } else {
-            page = dataRepository.findAllByGeographyEquals(geo, request);
+            list = dataRepository.findAllByGeographyEquals(geo);
         }
-        return new PageImpl<>(DataDetail.from(page.getContent()),request, page.getTotalElements());
+        Date d2 = new Date();
+        return new DataSummary<DataDetail>(DataDetail.from(list),d2.getTime()-d1.getTime());
     }
 
     @GetMapping("mongo")
-    public Page<MongoData> getMongoData(
+    public DataSummary<MongoData> getMongoData(
             @RequestParam(defaultValue = "0") Integer pageNumber,
             @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "ALL") String geography
     ) {
+        List<MongoData> data;
         Pageable request = PageRequest.of(pageNumber, pageSize);
+        Date d1 = new Date();
         if(geography.equals("ALL")) {
-            return mongoDataRepository.findAll(request);
+            data = mongoDataRepository.findAll();
         } else {
-            return mongoDataRepository.findAllByGeography(geography, request);
+            data = mongoDataRepository.findAllByGeography(geography);
         }
+        Date d2 = new Date();
+        return new DataSummary<MongoData>(data,d2.getTime()-d1.getTime());
     }
 }
