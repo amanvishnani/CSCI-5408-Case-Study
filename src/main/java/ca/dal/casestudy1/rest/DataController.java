@@ -33,11 +33,8 @@ public class DataController {
 
     @GetMapping("mysql")
     public DataSummary<DataDetail> getMysqlData(
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "ALL") String geography
     ) {
-        Pageable request = PageRequest.of(pageNumber, pageSize);
         Geography geo = null;
         if(!geography.equals("ALL")) {
             geo = mysqlGeographyRepository.findFirstByMemberName(geography);
@@ -55,12 +52,9 @@ public class DataController {
 
     @GetMapping("mongo")
     public DataSummary<MongoData> getMongoData(
-            @RequestParam(defaultValue = "0") Integer pageNumber,
-            @RequestParam(defaultValue = "20") Integer pageSize,
             @RequestParam(defaultValue = "ALL") String geography
     ) {
         List<MongoData> data;
-        Pageable request = PageRequest.of(pageNumber, pageSize);
         Date d1 = new Date();
         if(geography.equals("ALL")) {
             data = mongoDataRepository.findAll();
