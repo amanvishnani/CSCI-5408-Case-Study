@@ -34,6 +34,7 @@ app.controller("AppController", ['$scope', '$http', '$filter', function ($scope,
     function getRows() {
         var url = '/data/'+ $scope.datasource;
         var startTime = new Date();
+        $scope.gridOptions.api.setRowData([]);
         $http.get(url, {params:{geography: $scope.selectedGeo.memberName}}).then(function (value) {
             var endTime = new Date();
             $scope.responseTime = endTime - startTime;
@@ -42,6 +43,7 @@ app.controller("AppController", ['$scope', '$http', '$filter', function ($scope,
                 var element = value.data.content[i];
                 element.refDate = new Date(element.refDate);
                 element.refDate = $filter('date')(element.refDate, 'MMMM-yyyy')
+                element.value = (element.value == null || element.value == undefined || element.value == '') ? 'NULL' : element.value
             }
             if(value.data.content.length > 0) {
                 $scope.gridOptions.api.setRowData(value.data.content);
